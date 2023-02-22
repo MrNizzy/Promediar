@@ -1,59 +1,103 @@
+<h1 class="title">{{ title }}</h1>
 <main class="grid">
-    <section class="notes">
-        <!-- utiliza ngFor para mostrar cada nota en el array -->
-        <div *ngFor="let note of notes; let i = index" class="note">
-            <label for="note{{ i }}">Note</label>
-            <input
-                type="number"
-                placeholder="Note"
-                id="note{{ i }}"
-                min="0"
-                max="5"
-                step="0.01"
-                [(ngModel)]="note.note"
-                (ngModelChange)="calculateAverage()"
-            />
-            <label for="percent{{ i }}">Percent</label>
-            <input
-                type="number"
-                placeholder="Percent"
-                id="percent{{ i }}"
-                min="1"
-                max="100"
-                step="1"
-                [(ngModel)]="note.percent"
-                (ngModelChange)="calculateAverage()"
-            />
-            <!-- utiliza *ngIf para mostrar el botón de eliminar solo si el índice es mayor que cero -->
-            <button
-                type="button"
-                class="btn--close"
-                *ngIf="i > 0"
-                (click)="deleteNote(i); calculateAverage()"
-            >
-                x
-            </button>
-        </div>
-        <!-- agrega un botón de agregar nota -->
-        <button type="button" class="btn--add" (click)="addNote()">+</button>
-    </section>
-    <section>
-        <div class="note--final" *ngIf="notaActual">
-            <label>Nota actual</label>
-            {{ notaActual }}
-        </div>
-        <div
-            class="note-result"
-            *ngIf="totalPercent > 0 && totalPercent < 100 && notaRequerida > 0"
-        >
-            Necesitas {{ notaRequerida.toFixed(2) }} en el
-            {{ porcentajeRestante }}% restante para pasar la asignatura.
-        </div>
-        <div *ngIf="totalPercent == 100">
-            Haz ingresado el 100% del curso, tu nota final es
-            {{ notaActual }}
-        </div>
-    </section>
+  <section class="notes">
+    <!-- utiliza ngFor para mostrar cada nota en el array -->
+    <div *ngFor="let note of notes; let i = index" class="note">
+      <label for="note{{ i }}">Nota</label>
+      <input
+        type="number"
+        placeholder="0"
+        id="note{{ i }}"
+        min="0"
+        max="5"
+        step="0.01"
+        [(ngModel)]="note.note"
+        (ngModelChange)="calculateAverage()"
+      />
+      <label for="percent{{ i }}">Porcentaje</label>
+      <input
+        type="number"
+        placeholder="%"
+        id="percent{{ i }}"
+        min="1"
+        max="100"
+        step="1"
+        [(ngModel)]="note.percent"
+        (ngModelChange)="calculateAverage()"
+      />
+      <!-- utiliza *ngIf para mostrar el botón de eliminar solo si el índice es mayor que cero -->
+      <button
+        type="button"
+        class="btn--close"
+        *ngIf="i > 0"
+        (click)="deleteNote(i); calculateAverage()"
+      >
+        <img src="../assets/x-circle-fill.svg" alt="remove" />
+      </button>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn--add" (click)="addNote()">
+        <img src="../assets/plus-circle-fill.svg" alt="add" />
+        <span>Añadir nota</span>
+      </button>
+      <button type="button" class="btn btn--config" (click)="changeViewModal()">
+        <img src="../assets/gear-fill.svg" alt="Settings" />
+      </button>
+    </div>
+  </section>
+  <section>
+    <h2 class="subtitle" *ngIf="notaActual">
+      Nota: {{ notaActual.toFixed(2) }}
+    </h2>
+    <div
+      class="note-result"
+      *ngIf="totalPercent >= 0 && totalPercent < 100 && notaRequerida > 0"
+    >
+      Necesitas {{ isNaN(notaRequerida) ? 0 : notaRequerida.toFixed(2) }} en el
+      {{ porcentajeRestante }}% restante para pasar la asignatura.
+    </div>
+    <div *ngIf="totalPercent == 100">
+      Haz ingresado el 100% del curso, tu nota final es
+      {{ notaActual.toFixed(3) }}
+    </div>
+    <div *ngIf="totalPercent > 100">
+      Haz ingresado más del 100% del curso, tu porcentaje acumulado es
+      {{ totalPercent }}%
+    </div>
+  </section>
 </main>
+<div class="modal" *ngIf="isViewModal">
+  <div class="card">
+    <div class="card--header">
+      <span class="card--title">Configuración</span>
+      <button type="button" class="btn--close" (click)="changeViewModal()">
+        <img src="../assets/x-circle-fill.svg" alt="remove" />
+      </button>
+    </div>
+    <hr />
+    <div class="card--body">
+      <div class="card--group">
+        <label for="notea">Nota mínima</label>
+        <input
+          type="number"
+          placeholder="0"
+          id="notea"
+          min="0"
+          max="5"
+          step="0.01"
+        />
+        <label for="noteb">Nota máxima</label>
+        <input
+          type="number"
+          placeholder="5"
+          id="noteb"
+          min="0"
+          max="5"
+          step="0.01"
+        />
+      </div>
+    </div>
+  </div>
+</div>
 
 <router-outlet></router-outlet>
