@@ -1,143 +1,75 @@
-$yellow: #2f8ed9;
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap");
-* {
-  font-family: "Roboto", sans-serif;
-}
-
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid rgb(209, 213, 219);
-  border-radius: 0.5rem;
-  color: #ffffff;
-  font-size: 0.875rem;
-  font-weight: 600;
-  padding: 0.75rem;
-  text-align: center;
-  text-decoration: none #d1d5db solid;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.btn:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.btn:focus-visible {
-  box-shadow: none;
-}
-
-.btn--add {
-  width: 100%;
-  background-color: #3cbc45;
-}
-
-.btn--add:hover {
-  background-color: #3cab45;
-}
-
-.btn--config {
-  width: 3rem;
-  background-color: $yellow;
-}
 .modal {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.24);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.24);
+    z-index: 10;
 }
 
 .card {
-  width: 25rem;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 1rem;
-  border-radius: 0.25rem;
-  background-color: #ffffff;
+    width: 25rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    background-color: #ffffff;
 }
 
 .card--header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .card--title {
-    font-size: 2rem;
-  }
-}
-
-.btn--config:hover {
-  background-color: darken($yellow, 10);
-}
-
-.btn--close {
-  cursor: pointer;
-  font-size: 1rem;
-  font-style: bold;
-  background: none;
-  border: none;
-  color: #ec4547;
-}
-
-.btn-group {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.grid {
-  // background-color: aqua;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  section {
     display: flex;
-    gap: 1rem;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-  }
-}
-.notes {
-  padding: 1rem;
-  border-radius: 0.25rem;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  display: flex;
-  flex-direction: column;
-}
-.title {
-  font-size: 2.5rem;
-}
-.title,
-.subtitle {
-  font-family: "Poppins", sans-serif;
-  text-align: center;
-}
-.note {
-  font-size: 1rem;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  label {
-    color: #555555;
-  }
+    justify-content: space-between;
+    align-items: center;
+    .card--title {
+        font-size: 2rem;
+    }
 }
 
-input {
-  outline: none;
-  border: none;
-  border-bottom: 2px solid #c2c2c2;
-  font-size: 1rem;
-  padding: 0.6rem;
+mat-card {
+    padding: 1rem;
+}
+
+.container {
+    width: auto;
+    padding: 2rem 0;
+    margin: auto;
+}
+
+.flex {
+    display: flex;
+    mat-form-field,
+    button {
+        margin-right: 0.5rem;
+    }
+}
+
+.column {
+    flex-direction: column;
+}
+
+.align-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+.mb-2 {
+    margin-bottom: 2rem;
+}
+.mb-3 {
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.text-center {
+    text-align: center;
 }

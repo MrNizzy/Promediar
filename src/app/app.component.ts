@@ -8,16 +8,37 @@ import { Note } from './note.interface';
 })
 export class AppComponent {
   title = 'Promediar';
+
+  // UI
+  isViewModal: boolean = false;
+
+  // Variables
   notes: Note[] = [{ note: null, percent: null }];
-  promedioActual: number = 0;
+  acumulado: number = 0;
   notaRequerida: number = 0;
   porcentajeRestante: number = 0;
-  totalPercent: number = 0;
-  notaActual: number = 0;
-  isViewModal: boolean = false;
+  porcentajeTotal: number = 0;
+  acumuladoActual: number = 0;
+
+  // Configuración
+  notaMinima: number = 0;
+  notaMaxima: number = 5;
+  notaAprobatoria: number = 3;
+  notaObjetivo: number = 3;
+
+  notaMinimaTemp: number = 0;
+  notaMaximaTemp: number = 5;
+  notaAprobatoriaTemp: number = 3;
+  notaObjetivoTemp: number = 3;
 
   changeViewModal() {
     this.isViewModal = !this.isViewModal;
+  }
+
+  handleClick(event: MouseEvent) {
+    if (!(event.target as HTMLElement).closest('#card-modal')) {
+      this.changeViewModal();
+    }
   }
 
   // función para agregar una nueva nota al array
@@ -30,30 +51,49 @@ export class AppComponent {
     this.notes.splice(index, 1);
   }
 
-  // función para calcular el promedio y actualizar la nota resultado
-  calculateAverage() {
-    this.notaActual = 0;
-    this.totalPercent = 0;
-    for (let note of this.notes) {
-      if (note.note && note.percent) {
-        this.notaActual += (note.note * note.percent) / 100;
-        this.totalPercent += note.percent;
+  calculateAverage(note: number | null) {
+    if (note !== null && note >= this.notaMinima && note <= this.notaMaxima) {
+      this.acumuladoActual = 0;
+      this.porcentajeTotal = 0;
+      for (let note of this.notes) {
+        if (note.note && note.percent) {
+          this.acumuladoActual += (note.note * note.percent) / 100;
+          this.porcentajeTotal += note.percent;
+        }
       }
-    }
-    this.promedioActual = (this.notaActual / this.totalPercent) * 100;
-    if (this.totalPercent < 100) {
-      this.notaRequerida =
-        ((3 - (this.promedioActual * this.totalPercent) / 100) /
-          (100 - this.totalPercent)) *
-        100;
-    } else {
-      this.notaRequerida = 0;
-    }
+      this.acumulado = (this.acumuladoActual / this.porcentajeTotal) * 100;
+      if (this.porcentajeTotal < 100) {
+        this.notaRequerida =
+          ((this.notaAprobatoria - (this.acumulado * this.porcentajeTotal) / 100) /
+            (100 - this.porcentajeTotal)) *
+          100;
+      } else {
+        this.notaRequerida = 0;
+      }
 
-    this.porcentajeRestante = 100 - this.totalPercent;
+      this.porcentajeRestante = 100 - this.porcentajeTotal;
+    }
   }
 
   isNaN(id: any) {
     return isNaN(id);
+  }
+
+  resetValues() {
+    this.notaMinima = 0;
+    this.notaMaxima = 5;
+    this.notaAprobatoria = 3;
+    this.notaObjetivo = 3;
+    this.notaMinimaTemp = 0;
+    this.notaMaximaTemp = 5;
+    this.notaAprobatoriaTemp = 3;
+    this.notaObjetivoTemp = 3;
+  }
+
+  saveValues() {
+    this.notaMinima = this.notaMinimaTemp;
+    this.notaMaxima = this.notaMaximaTemp;
+    this.notaAprobatoria = this.notaAprobatoriaTemp;
+    this.notaObjetivo = this.notaObjetivoTemp;
   }
 }
